@@ -5,7 +5,11 @@ cluster:
   # - physical uses the SRIOV plugin for the passive interface
   # - virtual assumes you're using VMs and uses the MACVLAN plugin for the passive interface
   type: physical
-networkInterfaces: 
+  # Inline has to be set to true or false
+  # Setting to false will disable inline networks from being created (passive only)
+  inline: true
+networkInterfaces:
+    # Inline settings are not needed if inline is set to 'false' 
     inline1interface:
         #Configure the interface names
         deviceName: enp216s0f1

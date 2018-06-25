@@ -1,3 +1,4 @@
+{{- if .Values.cluster.inline }}
 apiVersion: "kubernetes.com/v1"
 kind: Network
 metadata:
@@ -19,4 +20,4 @@ args: '[
                 }
         }
 ]'
-
+{{- end }}
