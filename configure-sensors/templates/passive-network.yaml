@@ -1,0 +1,21 @@
+apiVersion: "kubernetes.com/v1"
+kind: Network
+metadata:
+  name: passive
+{{- if eq .Values.cluster.type "physical" }}
+plugin: sriov
+{{- else }}
+plugin: macvlan
+{{- end }}
+
+args: '[
+       {
+                "if0": "{{ .Values.networkInterfaces.passive1interface.deviceName }}",
+                "ipam": {
+                  "type": "host-local",
+                  "subnet": "10.51.0.0/16",
+                  "rangeStart": "10.51.0.10",
+                  "rangeEnd": "10.51.0.150"
+                }
+        }
+        ]'
