@@ -2,8 +2,8 @@ images:
     hostsetup: gcr.io/edcop-public/host-setup:2
 cluster:
   # Type has to be either 'physical' or 'virtual'
-  # - physical uses the SRIOV plugin for the passive interface
-  # - virtual assumes you're using VMs and uses the MACVLAN plugin for the passive interface
+  # - physical uses the SRIOV plugin for the interfaces
+  # - virtual assumes you're using VMs and uses the MACVLAN plugin the interfaces
   type: physical
   # Inline has to be set to true or false
   # Setting to false will disable inline networks from being created (passive only)
