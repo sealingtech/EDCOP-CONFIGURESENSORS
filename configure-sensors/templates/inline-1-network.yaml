@@ -11,7 +11,11 @@ plugin: macvlan
 
 args: '[
        {
+                {{- if eq .Values.cluster.type "physical" }}
                 "if0": "{{ .Values.networkInterfaces.inline1interface.deviceName }}",
+                {{- else }}
+                "master": "{{ .Values.networkInterfaces.inline1interface.deviceName }}",
+                {{- end }}
                 "ipam": {
                   "type": "host-local",
                   "subnet": "10.3.0.0/16",
