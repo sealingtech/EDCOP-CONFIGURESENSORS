@@ -17,4 +17,4 @@ networkInterfaces:
         numOfVirtualFunctions: 4
         irqCoreAssignment: 8
 nodeSelector:
-  nodetype: worker
+  nodetype: sensor
