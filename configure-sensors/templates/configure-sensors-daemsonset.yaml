@@ -70,7 +70,10 @@ spec:
             for x in $(seq 0 $inline1numofvfsminus);do ip link set dev $inline1interface vf $x trust on; done
             for x in $(seq 0 $inline2numofvfsminus);do ip link set dev $inline2interface vf $x trust on; done
             {{- end }}
-            
+           
+            ifconfig $inline1interface promisc
+            ifconfig $inline2interface promisc 
+
             ethtool -L  $inline1interface combined 1
             ethtool -L  $inline2interface combined 1
 
@@ -97,6 +100,7 @@ spec:
             for x in $(seq 0 $passive1numofvfsminus);do ip link set dev $passive1interface vf $x trust on; done
             {{- end }}
             
+            ifconfig $passive1interface promisc
             ethtool -L  $passive1interface combined 1
             ethtool -C $passive1interface adaptive-rx on rx-usecs 100
             ethtool -G $passive1interface rx 512
