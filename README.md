@@ -34,6 +34,8 @@ cluster:
   inline: true
 ```
 
+Keep in mind, most wireless network cards, cloud providers, and even some virtualization software providers **do not** support MACVLAN. Please make sure your device/environment will support MACVLAN before attempting to deploy EDCOP tools in virtual mode. Additionally, make sure your virtual network supports promiscuous mode and that your VMs will accept traffic.
+
 ## Network Interfaces
 
 Configure specific settings to define the network interface cards.  The deviceName settings must the be the same across the cluster.  The numOfVirtualFunctions setting will be the number of virtual functions that will be created on each physicalNIC.  Each physical sensor will consume one SR-IOV virtual function. Virtual deployments do not use the MACVLAN plugin instead of SR-IOV, meaning the numOfVirtualFunctions settings are ignored.  Finally, the irqCoreAssignment is the CPU core that will handle all interrupts for the Network Interface Card.
