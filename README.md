@@ -22,6 +22,7 @@ Network Interfaces
 
 Configure specific settings to define the network interface cards. The deviceName settings must the be the same across the cluster. The numOfVirtualFunctions setting will be the number of virtual functions that will be created on each NIC. Each sensor will consume one SR-IOV virtual function. Finally, the irqCoreAssignment is the CPU core that will handle all interrupts for the Network Interface Card.
 
+```
 networkInterfaces: 
     inline1interface:
         #Configure the interface names
@@ -39,8 +40,12 @@ networkInterfaces:
         numOfVirtualFunctions: 4
         irqCoreAssignment: 8    
 NodeSelector
+```
+
 
 The Nodetype option will configure which systems Configure Sensors will be applied to. This should only be systems which will carry sensors and should NEVER include the master node.
 
+```
 nodeSelector:
   nodetype: worker
+````
