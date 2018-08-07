@@ -14,7 +14,7 @@ args: '[
                 "if0": "{{ .Values.networkInterfaces.passive1interface.deviceName }}",
                 {{- else }}
                 "master": "{{ .Values.networkInterfaces.passive1interface.deviceName }}",
-                "mode": "passthru",
+                "mode": "bridge",
                 {{- end }}
                 "ipam": {
                   "type": "host-local",
