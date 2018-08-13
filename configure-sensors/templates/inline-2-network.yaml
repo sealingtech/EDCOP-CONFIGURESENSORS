@@ -1,11 +1,22 @@
+{{- if .Values.cluster.inline }}
 apiVersion: "kubernetes.com/v1"
 kind: Network
 metadata:
-  name: inline-2 
+  name: inline-2
+{{- if eq .Values.cluster.type "physical" }}
 plugin: sriov
+{{- else }}
+plugin: macvlan
+{{- end }}
+ 
 args: '[
        {
+                {{- if eq .Values.cluster.type "physical" }}
                 "if0": "{{ .Values.networkInterfaces.inline2interface.deviceName }}",
+                {{- else }}
+                "master": "{{ .Values.networkInterfaces.inline2interface.deviceName }}",
+                "mode": "bridge",
+                {{- end }}
                 "ipam": {
                   "type": "host-local",
                   "subnet": "10.4.0.0/16",
@@ -14,4 +25,4 @@ args: '[
                 }
         }
 ]'
-
+{{- end }}
