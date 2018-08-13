@@ -95,6 +95,8 @@ spec:
             # Passive
             {{- if eq .Values.cluster.type "physical" }}
             passive1numofvfsminus=$(expr $passive1numofvfs - 1)
+            echo 0 >  /sys/class/net/$passive1interface/device/sriov_numvfs
+            echo $inline1numofvfs >  /sys/class/net/$passive1interface/device/sriov_numvfs            
 
             for x in $(seq 0 $passive1numofvfsminus);do ip link set dev $passive1interface vf $x spoofchk off; done
             for x in $(seq 0 $passive1numofvfsminus);do ip link set dev $passive1interface vf $x trust on; done
