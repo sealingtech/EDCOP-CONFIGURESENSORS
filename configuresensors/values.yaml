@@ -26,4 +26,4 @@ networkInterfaces:
         numOfVirtualFunctions: 4        # Not needed if using MACVLAN
         irqCoreAssignment: 8
 nodeSelector:
-  nodetype: worker
+  label: sensor
