@@ -19,7 +19,7 @@ spec:
     spec:
       hostNetwork: true
       nodeSelector:
-        nodetype: {{ .Values.nodeSelector.nodetype }}
+        {{ .Values.nodeSelector.worker }}: "true"
       containers:
       - name: configure-sensors
         image: {{ .Values.images.hostsetup }}
