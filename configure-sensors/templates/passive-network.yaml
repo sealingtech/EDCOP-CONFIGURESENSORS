@@ -1,21 +1,13 @@
+{{- if ne .Values.cluster.useHostNetwoking "true" -}}
 apiVersion: "kubernetes.com/v1"
 kind: Network
 metadata:
   name: passive
-{{- if eq .Values.cluster.type "physical" }}
 plugin: sriov
-{{- else }}
-plugin: macvlan
-{{- end }}
 
 args: '[
        {
-                {{- if eq .Values.cluster.type "physical" }}
                 "if0": "{{ .Values.networkInterfaces.passive1interface.deviceName }}",
-                {{- else }}
-                "master": "{{ .Values.networkInterfaces.passive1interface.deviceName }}",
-                "mode": "bridge",
-                {{- end }}
                 "ipam": {
                   "type": "host-local",
                   "subnet": "10.51.0.0/16",
