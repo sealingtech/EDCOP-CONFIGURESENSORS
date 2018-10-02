@@ -1,4 +1,5 @@
-{{- if (.Values.cluster.inline) and (ne .Values.cluster.useHostNetworking true) -}}
+{{- if (ne .Values.cluster.useHostNetworking true) -}}
+{{- if .Values.cluster.inline }}
 apiVersion: "kubernetes.com/v1"
 kind: Network
 metadata:
@@ -15,5 +16,6 @@ args: '[
                   "rangeEnd": "10.4.0.150"
                 }
         }
-]'
+        ]'
+{{- end }}
 {{- end -}}
