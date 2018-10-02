@@ -1,4 +1,4 @@
-{{- if (.Values.cluster.inline) and ne .Values.cluster.useHostNetworking true -}}
+{{- if (.Values.cluster.inline) and (ne .Values.cluster.useHostNetworking true) -}}
 apiVersion: "kubernetes.com/v1"
 kind: Network
 metadata:

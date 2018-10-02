@@ -30,27 +30,27 @@ spec:
         {{- if .Values.cluster.inline }}
         - name: inline1interface
           value: {{ .Values.networkInterfaces.inline1interface.deviceName }}
-        {{- if ne .Values.cluster.useHostNetworking true }}
-        - name: inline1numofvfs
-          value: "{{ .Values.networkInterfaces.inline1interface.numOfVirtualFunctions }}"
-        - name: inline2numofvfs
-          value: "{{ .Values.networkInterfaces.inline2interface.numOfVirtualFunctions }}"
-        {{- end }}
         - name: inline1irqcore
           value: "{{ .Values.networkInterfaces.inline1interface.irqCoreAssignment }}"          
         - name: inline2interface
           value: {{ .Values.networkInterfaces.inline2interface.deviceName }}
         - name: inline2irqcore
           value: "{{ .Values.networkInterfaces.inline2interface.irqCoreAssignment }}" 
+        {{- if ne .Values.cluster.useHostNetworking true }}
+        - name: inline1numofvfs
+          value: "{{ .Values.networkInterfaces.inline1interface.numOfVirtualFunctions }}"
+        - name: inline2numofvfs
+          value: "{{ .Values.networkInterfaces.inline2interface.numOfVirtualFunctions }}"
+        {{- end }}
         {{- end }}          
         - name: passive1interface
           value: {{ .Values.networkInterfaces.passive1interface.deviceName }}
+        - name: passive1irqcore
+          value: "{{ .Values.networkInterfaces.passive1interface.irqCoreAssignment }}"  
         {{- if ne .Values.cluster.useHostNetworking true }} 
         - name: passive1numofvfs
           value: "{{ .Values.networkInterfaces.passive1interface.numOfVirtualFunctions }}"
         {{- end }}
-        - name: passive1irqcore
-          value: "{{ .Values.networkInterfaces.passive1interface.irqCoreAssignment }}"  
         - name: STARTUP_SCRIPT
           value: |
             #! /bin/bash
