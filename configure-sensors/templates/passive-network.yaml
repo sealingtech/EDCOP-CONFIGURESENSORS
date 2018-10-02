@@ -1,4 +1,4 @@
-{{- if ne .Values.cluster.useHostNetwoking "true" -}}
+{{- if ne .Values.cluster.useHostNetworking true -}}
 apiVersion: "kubernetes.com/v1"
 kind: Network
 metadata:
@@ -16,3 +16,4 @@ args: '[
                 }
         }
         ]'
+{{- end -}}

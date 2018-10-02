@@ -30,7 +30,7 @@ spec:
         {{- if .Values.cluster.inline }}
         - name: inline1interface
           value: {{ .Values.networkInterfaces.inline1interface.deviceName }}
-        {{- if ne .Values.cluster.useHostNetwoking "true" }}
+        {{- if ne .Values.cluster.useHostNetworking true }}
         - name: inline1numofvfs
           value: "{{ .Values.networkInterfaces.inline1interface.numOfVirtualFunctions }}"
         - name: inline2numofvfs
@@ -45,7 +45,7 @@ spec:
         {{- end }}          
         - name: passive1interface
           value: {{ .Values.networkInterfaces.passive1interface.deviceName }}
-        {{- if ne .Values.cluster.useHostNetwoking "true" }} 
+        {{- if ne .Values.cluster.useHostNetworking true }} 
         - name: passive1numofvfs
           value: "{{ .Values.networkInterfaces.passive1interface.numOfVirtualFunctions }}"
         {{- end }}
@@ -55,7 +55,7 @@ spec:
           value: |
             #! /bin/bash
             {{- if .Values.cluster.inline }}
-            {{- if ne .Values.cluster.useHostNetwoking "true" }}
+            {{- if ne .Values.cluster.useHostNetworking true }}
             # Inline
             echo 0 >  /sys/class/net/$inline1interface/device/sriov_numvfs
             echo $inline1numofvfs >  /sys/class/net/$inline1interface/device/sriov_numvfs
@@ -93,7 +93,7 @@ spec:
             {{- end }}
             
             # Passive
-            {{- if ne .Values.cluster.useHostNetwoking "true" }}
+            {{- if ne .Values.cluster.useHostNetworking true }}
             passive1numofvfsminus=$(expr $passive1numofvfs - 1)
 
             for x in $(seq 0 $passive1numofvfsminus);do ip link set dev $passive1interface vf $x spoofchk off; done
