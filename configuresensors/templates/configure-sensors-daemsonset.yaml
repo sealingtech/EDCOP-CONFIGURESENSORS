@@ -19,7 +19,7 @@ spec:
     spec:
       hostNetwork: true
       nodeSelector:
-        {{ .Values.nodeSelector.worker }}: "true"
+        {{ .Values.nodeSelector.label }}: "true"
       containers:
       - name: configure-sensors
         image: {{ .Values.images.hostsetup }}
@@ -73,19 +73,14 @@ spec:
            
             ifconfig $inline1interface promisc
             ifconfig $inline2interface promisc 
-
             ethtool -L  $inline1interface combined 1
             ethtool -L  $inline2interface combined 1
-
             ethtool -C $inline1interface adaptive-rx on rx-usecs 100
             ethtool -C $inline2interface adaptive-rx on rx-usecs 100
-
             ethtool -G $inline1interface rx 512
             ethtool -G $inline2interface rx 512
-
             for i in rx tx tso ufo gso gro rxhash ntuple sg txvlan rxvlan; do ethtool -K $inline1interface $i off 2>&1 > /dev/null; done;
             for i in rx tx tso ufo gso gro rxhash ntuple sg txvlan rxvlan; do ethtool -K $inline2interface $i off 2>&1 > /dev/null; done;
-
             for NIC in $(ls -d /sys/class/net/$inline1interface/device/virtfn*/net/* | cut -f9 -d'/'); do ethtool -G $NIC rx 128; done
             for NIC in $(ls -d /sys/class/net/$inline2interface/device/virtfn*/net/* | cut -f9 -d'/'); do ethtool -G $NIC rx 128; done
             for NIC in $(ls -d /sys/class/net/$inline1interface/device/virtfn*/net/* | cut -f9 -d'/'); do ethtool -G $NIC tx 128; done
@@ -95,7 +90,6 @@ spec:
             # Passive
             {{- if ne .Values.cluster.useHostNetworking true }}
             passive1numofvfsminus=$(expr $passive1numofvfs - 1)
-
             for x in $(seq 0 $passive1numofvfsminus);do ip link set dev $passive1interface vf $x spoofchk off; done
             for x in $(seq 0 $passive1numofvfsminus);do ip link set dev $passive1interface vf $x trust on; done
             {{- end }}
@@ -104,14 +98,11 @@ spec:
             ethtool -L  $passive1interface combined 1
             ethtool -C $passive1interface adaptive-rx on rx-usecs 100
             ethtool -G $passive1interface rx 512
-
             for i in rx tx tso ufo gso gro rxhash ntuple sg txvlan rxvlan; do ethtool -K $passive1interface $i off 2>&1 > /dev/null; done;
-
             for NIC in $(ls -d /sys/class/net/$passive1interface/device/virtfn*/net/* | cut -f9 -d'/'); do ethtool -G $NIC rx 128; done
             for NIC in $(ls -d /sys/class/net/$passive1interface/device/virtfn*/net/* | cut -f9 -d'/'); do ethtool -G $NIC tx 128; done
             
             systemctl stop irqbalance
-
             cd i40e-2.4.3/scripts
             
             {{- if .Values.cluster.inline }}
@@ -119,7 +110,5 @@ spec:
             ./set_irq_affinity $inline2interface $inline2irqcore
             {{- end }}
             ./set_irq_affinity $passive1interface $passive1irqcore
-
-
             #needed for Elastic
             sysctl -w vm.max_map_count=262144
