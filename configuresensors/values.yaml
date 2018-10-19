@@ -1,10 +1,10 @@
 images:
-    hostsetup: gcr.io/edcop-public/host-setup:2
+    hostsetup: gcr.io/edcop-public/host-setup:3
 cluster:
-  # Type has to be either 'physical' or 'virtual'
-  # - physical uses the SRIOV plugin for the interfaces
-  # - virtual assumes you're using VMs and uses the MACVLAN plugin instead
-  type: physical
+  # useHostNetworking has to be true or false.
+  # - 'true' uses the SRIOV plugin for the interfaces
+  # - 'false' uses host networking to directly expose the interfaces on the host
+  useHostNetworking: false
   # Inline has to be set to true or false
   # Setting to false will disable inline networks from being created (passive only)
   inline: true
@@ -14,16 +14,16 @@ networkInterfaces:
         #Configure the interface names
         deviceName: eth0
         #Configure the number of virtual functions to be created on the interface
-        numOfVirtualFunctions: 4        # Not needed if using MACVLAN
+        numOfVirtualFunctions: 4
         #Configure the core that will handle interrupts for the network interface
         irqCoreAssignment: 8
     inline2interface:
         deviceName: eth1
-        numOfVirtualFunctions: 4        # Not needed if using MACVLAN
+        numOfVirtualFunctions: 4
         irqCoreAssignment: 8
     passive1interface:
         deviceName: eth2
-        numOfVirtualFunctions: 4        # Not needed if using MACVLAN
+        numOfVirtualFunctions: 4
         irqCoreAssignment: 8
 nodeSelector:
   label: sensor
